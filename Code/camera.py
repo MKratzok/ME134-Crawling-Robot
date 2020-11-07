@@ -35,7 +35,7 @@ class Camera:
         self.cam.capture(self.noise,'rgb')
         self.noise = self.noise-np.mean(self.noise) # background 'noise'
 
-    def see_blue(self):
+    def sees_blue(self):
         self.cam.capture(self.data,'rgb')
         mean_array = []
         for ii in range(0,3): 

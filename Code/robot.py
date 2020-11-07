@@ -1,4 +1,5 @@
 from adafruit_servokit import ServoKit
+import camera
 from time import sleep
 
 ''' PIN MAP:
@@ -10,8 +11,10 @@ from time import sleep
     [5] is suction cup
 '''
 
+
 class Robot:
     def __init__(self):
+        self.cam = camera.Camera()
         self.kit = ServoKit(channels=16)
         self.kit.servo[0].angle = 90
         self.kit.servo[1].angle = 90
@@ -22,13 +25,13 @@ class Robot:
 
         self.stuck = False
 
-        #initialize camera TODO
-
     def _stick(self):
         self.kit.servo[5] = 45
+        self.stuck = True
 
     def _unstick(self):
         self.kit.servo[5] = 90
+        self.stuck = False
 
     def _curl_up(self):
         # STUB TODO
@@ -67,6 +70,5 @@ class Robot:
         else:
             self._stick()
 
-    def do_camera_stuff(self):
-        # todo
-        return
+    def sees_blue(self):
+        return self.cam.sees_blue()

@@ -5,10 +5,8 @@ import sys
 def run_auto(r): #todo
     while True:
         r.crawl()
-        if r.do_camera_stuff():
+        if r.sees_blue():
             r.turn(180)
-
-    #Go forward until camera detects tape then turn and return
 
 
 def run_manual(r):
@@ -48,7 +46,5 @@ if __name__ == "__main__":
 
 
 '''todo list:
-    1) add camera code - J
-    2) run auto (depends on camera) 
     4) figure out how much to "curl up" 
     5) figure out how much servo should move to stick/unstick'''
