@@ -38,19 +38,27 @@ class Camera:
     def sees_blue(self):
         self.cam.capture(self.data,'rgb')
         mean_array = []
+        std_array = []
         for ii in range(0,3): 
             # calculate mean and STDev
             mean_array.append(np.mean(self.data[:,:,ii]-np.mean(self.data)-np.mean(self.noise[:,:,ii])))
-            #std_array.append(np.std(data[:,:,ii]-np.mean(data)-np.mean(noise[:,:,ii]))) 
-            #print('-------------------------') 
-            #print(rgb_text[ii]+'---mean: {0:2.1f}, stdev: {1:2.1f}'.format(mean_array[ii],std_array[ii]))
+            std_array.append(np.std(self.data[:,:,ii]-np.mean(self.data)-np.mean(self.noise[:,:,ii])))
+            print('-------------------------')
+            print(rgb_text[ii]+'---mean: {0:2.1f}, stdev: {1:2.1f}'.format(mean_array[ii],std_array[ii]))
 
-        # guess the color of the object 
-        print('The Object is: {}'.format(rgb_text[np.argmax(mean_array)])) 
-        print('--------------------------')
-        time.sleep(1)
-        # if the color of the object is blue, then stop
-        return np.argmax(mean_array) == 2
+        max_ind = np.argmax(mean_array)  # Most intense color
+
+        # If std dev of most intense color is > 25 then not that color
+        if std_array[max_ind] > 25 or mean_array[max_ind] < 1.5:
+            print('The Object is not a primary color.')
+            return False
+        else:
+            # guess the color of the object
+            print('The Object is: {}'.format(rgb_text[max_ind]))
+            print('--------------------------')
+            time.sleep(1)
+            # if the color of the object is blue, then stop
+            return max_ind == 2
 
 
 
