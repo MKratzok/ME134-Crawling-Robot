@@ -48,18 +48,26 @@ class Camera:
 
         max_ind = np.argmax(mean_array)  # Most intense color
 
+        if mean_array[2] / 2 > mean_array[0] and mean_array[2]/2 > mean_array[1]:
+            return self.success()
+
         # If std dev of most intense color is > 25 then not that color
         if std_array[max_ind] > 25 or mean_array[max_ind] < 1.5:
             print('The Object is not a primary color.')
             return False
         else:
-            # guess the color of the object
-            print('The Object is: {}'.format(rgb_text[max_ind]))
-            print('--------------------------')
-            time.sleep(1)
-            # if the color of the object is blue, then stop
-            return max_ind == 2
+            if max_ind == 2:
+                return self.success()
+            else:
+                return False
 
+    def success(self):
+        # guess the color of the object
+        print('The Object is: Blue')
+        print('--------------------------')
+        time.sleep(1)
+        # if the color of the object is blue, then stop
+        return True
 
 
 

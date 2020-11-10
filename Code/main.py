@@ -16,15 +16,26 @@ def run_auto(r):
     print("/__________________________________/")
 
     steps = 0
+
+    for i in range(0, 20):
+        r.crawl()
+        sleep(0.5)
+
     while not r.sees_blue():
         r.crawl()
         sleep(0.5)
 
-    r.turn(6000)
+    r.turn(3960)
 
-    while True:
+    for i in range(0,10):
         r.crawl()
         sleep(0.5)
+
+    while not r.sees_blue():
+        r.crawl()
+        sleep(0.5)
+
+    r.dance(10)
 
 
 def run_manual(r):
