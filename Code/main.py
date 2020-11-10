@@ -10,17 +10,21 @@ def run_auto(r):
     :return: nothing
     """
 
+    print("   ___________________________________")
+    print("  /                                  /")
+    print(" /            AUTO MODE             /")
+    print("/__________________________________/")
+
     steps = 0
+    while not r.sees_blue():
+        r.crawl()
+        sleep(0.5)
+
+    r.turn(6000)
+
     while True:
         r.crawl()
-        steps += 1
-
-        if r.sees_blue():
-            r.turn(180)
-            # for i in range(0,steps)
-            #     r.crawl()
-
-        sleep(1)
+        sleep(0.5)
 
 
 def run_manual(r):
@@ -30,6 +34,14 @@ def run_manual(r):
     :return: nothing
     """
     #if extra time, then use arrow keys/don't press enter
+
+    print("   ___________________________________")
+    print("  /                                  /")
+    print(" /           MANUAL MODE            /")
+    print("/__________________________________/")
+
+    sleep(1)
+
     c = ""
 
     while c.lower() != "q":
@@ -38,12 +50,16 @@ def run_manual(r):
         if c == "w":
             r.crawl()
         elif c == "d":
-            r.turn(45)
+            r.turn(-90)
         elif c == "a":
-            r.turn(-45)
+            r.turn(90)
         elif c == "s":
             r.suction()
-        else:
+        elif c == "c":
+            r.sees_blue()
+        elif c == "!":
+            r.dance(10)
+        elif c != "q":
             print(c + ': Command not found')
 
         sleep(0.1)
@@ -66,8 +82,3 @@ if __name__ == "__main__":
         run_auto(r)
     else:
         run_manual(r)
-
-
-'''todo list:
-    4) figure out how much to "curl up" 
-    5) figure out how much servo should move to stick/unstick'''
